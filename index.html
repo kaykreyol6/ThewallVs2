@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SermonIQ — Intelligent Ministry Analytics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --navy:#0d1b3e;
+  --navy2:#152450;
+  --navy3:#1e3166;
+  --gold:#c9972a;
+  --gold2:#e8b84b;
+  --gold3:#f5d57a;
+  --ivory:#f8f3e8;
+  --ivory2:#ede5d0;
+  --cream:#faf7f0;
+  --text:#1a1a2e;
+  --text2:#4a4a6a;
+  --text3:#8888aa;
+  --white:#ffffff;
+  --red:#c0392b;
+  --green:#1e8449;
+  --amber:#d4a017;
+  --border:#ddd5c0;
+  --border2:#c9b99a;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Lato',sans-serif;background:var(--cream);color:var(--text);overflow-x:hidden}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--ivory)}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:3px}
+
+/* ══════════════════════════════
+   NAV
+══════════════════════════════ */
+nav{position:fixed;top:0;left:0;right:0;z-index:300;display:flex;align-items:center;justify-content:space-between;padding:0 48px;height:68px;background:rgba(13,27,62,.97);backdrop-filter:blur(16px);border-bottom:1px solid rgba(201,151,42,.2)}
+.nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.logo-svg{width:42px;height:42px;flex-shrink:0}
+.logo-text{display:flex;flex-direction:column}
+.logo-name{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--gold2);letter-spacing:.5px;line-height:1}
+.logo-tagline{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(201,151,42,.6);font-weight:400;margin-top:2px}
+.nav-links{display:flex;gap:32px}
+.nav-links a{text-decoration:none;font-size:13px;font-weight:400;color:rgba(248,243,232,.65);letter-spacing:.03em;transition:color .2s;cursor:pointer}
+.nav-links a:hover{color:var(--gold2)}
+.nav-btns{display:flex;gap:10px;align-items:center}
+.btn-nav-ghost{background:transparent;border:1px solid rgba(201,151,42,.4);color:var(--gold3);padding:8px 20px;border-radius:4px;font-size:13px;font-weight:400;cursor:pointer;font-family:'Lato',sans-serif;letter-spacing:.04em;transition:all .25s}
+.btn-nav-ghost:hover{border-color:var(--gold2);color:var(--gold2);background:rgba(201,151,42,.08)}
+.btn-nav-gold{background:var(--gold);border:none;color:var(--navy);padding:9px 22px;border-radius:4px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Lato',sans-serif;letter-spacing:.04em;transition:all .25s}
+.btn-nav-gold:hover{background:var(--gold2);transform:translateY(-1px);box-shadow:0 4px 20px rgba(201,151,42,.35)}
+.btn-nav-gold:active{transform:translateY(0)}
+
+/* ══════════════════════════════
+   LANDING PAGE
+══════════════════════════════ */
+#landing{display:block}
+#dashboard{display:none}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:100px 48px 80px;position:relative;overflow:hidden;background:var(--navy)}
+/* Stained-glass light effect */
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 70% at 50% 30%,rgba(201,151,42,.12) 0%,transparent 65%),radial-gradient(ellipse 50% 80% at 20% 60%,rgba(30,49,102,.8) 0%,transparent 70%),radial-gradient(ellipse 50% 80% at 80% 40%,rgba(15,35,90,.6) 0%,transparent 70%);pointer-events:none}
+.hero::after{content:'';position:absolute;inset:0;background-image:repeating-linear-gradient(0deg,transparent,transparent 59px,rgba(201,151,42,.04) 60px),repeating-linear-gradient(90deg,transparent,transparent 59px,rgba(201,151,42,.04) 60px);pointer-events:none}
+.hero-inner{max-width:1160px;width:100%;display:grid;grid-template-columns:1fr 440px;gap:80px;align-items:center;position:relative;z-index:1}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(201,151,42,.12);border:1px solid rgba(201,151,42,.3);border-radius:100px;padding:6px 16px;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold3);margin-bottom:24px;font-weight:700}
+.hero-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--gold2);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+h1.hero-h1{font-family:'Playfair Display',serif;font-size:clamp(44px,5.5vw,72px);font-weight:700;color:var(--ivory);line-height:1.1;letter-spacing:-.5px;margin-bottom:20px}
+h1.hero-h1 em{color:var(--gold2);font-style:italic}
+.hero-sub{font-size:17px;color:rgba(248,243,232,.6);line-height:1.75;font-weight:300;max-width:520px;margin-bottom:36px}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:52px}
+.btn-hero-primary{background:var(--gold);border:none;color:var(--navy);padding:16px 36px;border-radius:5px;font-size:15px;font-weight:700;cursor:pointer;font-family:'Lato',sans-serif;letter-spacing:.04em;transition:all .25s;display:inline-flex;align-items:center;gap:9px}
+.btn-hero-primary:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 10px 36px rgba(201,151,42,.4)}
+.btn-hero-primary:active{transform:translateY(0);box-shadow:none}
+.btn-hero-outline{background:transparent;border:1px solid rgba(248,243,232,.3);color:var(--ivory);padding:16px 36px;border-radius:5px;font-size:15px;font-weight:400;cursor:pointer;font-family:'Lato',sans-serif;letter-spacing:.04em;transition:all .25s}
+.btn-hero-outline:hover{border-color:rgba(248,243,232,.6);background:rgba(248,243,232,.06);transform:translateY(-2px)}
+.btn-hero-outline:active{transform:translateY(0)}
+.hero-social-proof{display:flex;align-items:center;gap:16px}
+.proof-avatars{display:flex}
+.proof-av{width:32px;height:32px;border-radius:50%;border:2px solid var(--navy);background:var(--navy3);margin-left:-8px;display:flex;align-items:center;justify-content:center;font-size:12px;color:var(--gold3);font-weight:700}
+.proof-av:first-child{margin-left:0}
+.proof-text{font-size:13px;color:rgba(248,243,232,.5);font-weight:300}
+.proof-text strong{color:var(--gold3);font-weight:700}
+
+/* HERO CARD — Live Dashboard Preview */
+.hero-card{background:rgba(21,36,80,.85);border:1px solid rgba(201,151,42,.25);border-radius:16px;padding:24px;backdrop-filter:blur(12px);position:relative;overflow:hidden}
+.hero-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.hc-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.hc-title{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(201,151,42,.7);font-weight:700}
+.live-badge{display:flex;align-items:center;gap:5px;background:rgba(30,132,73,.15);border:1px solid rgba(30,132,73,.4);border-radius:100px;padding:3px 10px;font-size:10px;color:#4ecb71;font-weight:700;letter-spacing:.08em}
+
+/* Engagement meter */
+.eng-meter{margin-bottom:20px}
+.eng-label{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.eng-label-text{font-size:12px;color:rgba(248,243,232,.5);font-weight:300}
+.eng-score{font-family:'Playfair Display',serif;font-size:28px;color:var(--gold2);font-weight:700}
+.meter-track{height:8px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden;position:relative}
+.meter-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--gold),var(--gold2));width:0%;transition:width 1.8s ease;position:relative}
+.meter-fill::after{content:'';position:absolute;right:0;top:0;bottom:0;width:20px;background:rgba(255,255,255,.3);animation:shimmer 1.5s infinite;border-radius:4px}
+@keyframes shimmer{0%,100%{opacity:0}50%{opacity:1}}
+
+/* Response keywords */
+.kw-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+.kw-pill{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:8px 10px;display:flex;align-items:center;justify-content:space-between}
+.kw-name{font-size:11px;color:rgba(248,243,232,.6);font-weight:400}
+.kw-count{font-family:'Courier Prime',monospace;font-size:14px;font-weight:700}
+.kw-count.gold{color:var(--gold2)}
+.kw-count.green{color:#4ecb71}
+.kw-count.amber{color:#f0a500}
+
+/* Verse suggestion */
+.verse-box{background:rgba(201,151,42,.08);border:1px solid rgba(201,151,42,.2);border-radius:10px;padding:12px 14px}
+.verse-label{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;font-weight:700}
+.verse-text{font-family:'Playfair Display',serif;font-size:13px;color:var(--ivory);font-style:italic;line-height:1.55;margin-bottom:4px}
+.verse-ref{font-size:10px;color:var(--gold);font-weight:700;letter-spacing:.05em}
+
+/* Anim in */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.hero-left>*{animation:fadeUp .7s ease both}
+.hero-left>*:nth-child(1){animation-delay:.05s}
+.hero-left>*:nth-child(2){animation-delay:.15s}
+.hero-left>*:nth-child(3){animation-delay:.25s}
+.hero-left>*:nth-child(4){animation-delay:.35s}
+.hero-left>*:nth-child(5){animation-delay:.45s}
+.hero-card{animation:fadeUp .9s ease .3s both}
+
+/* ── FEATURES ── */
+.features{padding:100px 48px;background:var(--ivory);position:relative}
+.features::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.section-inner{max-width:1160px;margin:0 auto}
+.section-eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.section-eyebrow::before{content:'✦';font-size:10px}
+.section-h2{font-family:'Playfair Display',serif;font-size:clamp(32px,4vw,52px);font-weight:700;color:var(--navy);line-height:1.15;margin-bottom:16px}
+.section-h2 em{color:var(--gold);font-style:italic}
+.section-sub{font-size:16px;color:var(--text2);line-height:1.75;font-weight:300;max-width:580px;margin-bottom:64px}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.feat-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:32px;transition:all .3s;position:relative;overflow:hidden;cursor:default}
+.feat-card::before{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold2));transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.feat-card:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(13,27,62,.12);border-color:var(--gold)}
+.feat-card:hover::before{transform:scaleX(1)}
+.feat-icon{width:52px;height:52px;border-radius:12px;background:linear-gradient(135deg,rgba(201,151,42,.15),rgba(201,151,42,.05));display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:20px;border:1px solid rgba(201,151,42,.2)}
+.feat-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:600;color:var(--navy);margin-bottom:10px}
+.feat-body{font-size:14px;color:var(--text2);line-height:1.7;font-weight:300}
+
+/* ── HOW IT WORKS ── */
+.how{padding:100px 48px;background:var(--navy);position:relative;overflow:hidden}
+.how::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(201,151,42,.06) 0%,transparent 70%);pointer-events:none}
+.steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:60px}
+.step{text-align:center;padding:32px 20px;position:relative}
+.step::after{content:'→';position:absolute;right:-12px;top:42px;font-size:20px;color:rgba(201,151,42,.3);font-weight:700}
+.step:last-child::after{display:none}
+.step-num{width:52px;height:52px;border-radius:50%;background:rgba(201,151,42,.12);border:2px solid rgba(201,151,42,.3);display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--gold2);margin:0 auto 20px}
+.step-title{font-family:'Playfair Display',serif;font-size:18px;font-weight:600;color:var(--ivory);margin-bottom:10px}
+.step-body{font-size:13px;color:rgba(248,243,232,.5);line-height:1.7;font-weight:300}
+
+/* ── TESTIMONIALS ── */
+.testi{padding:100px 48px;background:var(--cream)}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:60px}
+.testi-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:32px;position:relative}
+.testi-card::before{content:'"';font-family:'Playfair Display',serif;font-size:80px;color:rgba(201,151,42,.15);position:absolute;top:12px;left:24px;line-height:1}
+.testi-text{font-family:'Playfair Display',serif;font-size:15px;font-style:italic;color:var(--text);line-height:1.7;margin-bottom:20px;padding-top:20px}
+.testi-author{display:flex;align-items:center;gap:12px}
+.testi-av{width:44px;height:44px;border-radius:50%;background:var(--navy2);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;border:2px solid var(--gold)}
+.testi-name{font-size:14px;font-weight:700;color:var(--navy)}
+.testi-church{font-size:12px;color:var(--text3);font-weight:300}
+.testi-stars{color:var(--gold);font-size:13px;margin-bottom:4px}
+
+/* ── PRICING ── */
+.pricing{padding:100px 48px;background:var(--ivory)}
+.pricing-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:60px}
+.plan{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:28px;transition:all .25s;position:relative}
+.plan:hover{transform:translateY(-4px);box-shadow:0 16px 48px rgba(13,27,62,.1)}
+.plan.featured{background:var(--navy);border-color:var(--gold);transform:scale(1.03)}
+.plan.featured:hover{transform:scale(1.03) translateY(-4px)}
+.plan-name{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:12px}
+.plan-price{font-family:'Playfair Display',serif;font-size:42px;font-weight:700;color:var(--navy);line-height:1;margin-bottom:4px}
+.plan.featured .plan-price{color:var(--gold2)}
+.plan-price span{font-size:16px;font-weight:300;font-family:'Lato',sans-serif;color:var(--text3)}
+.plan.featured .plan-price span{color:rgba(248,243,232,.4)}
+.plan-for{font-size:12px;color:var(--text2);margin-bottom:20px;font-weight:300;line-height:1.5}
+.plan.featured .plan-for{color:rgba(248,243,232,.5)}
+.plan-divider{height:1px;background:var(--border);margin:18px 0}
+.plan.featured .plan-divider{background:rgba(201,151,42,.2)}
+.plan-feat{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--text2);margin-bottom:9px;line-height:1.5}
+.plan.featured .plan-feat{color:rgba(248,243,232,.6)}
+.plan-feat .ck{color:var(--gold);font-size:12px;margin-top:2px;flex-shrink:0}
+.plan-btn{width:100%;padding:13px;border-radius:6px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Lato',sans-serif;margin-top:22px;transition:all .25s;letter-spacing:.03em;border:1px solid var(--border);background:transparent;color:var(--navy)}
+.plan-btn:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,151,42,.05)}
+.plan-btn:active{transform:scale(.98)}
+.plan.featured .plan-btn{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+.plan.featured .plan-btn:hover{background:var(--gold2);border-color:var(--gold2)}
+.plan-badge{position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--navy);font-size:9px;font-weight:700;letter-spacing:.14em;padding:4px 16px;border-radius:0 0 8px 8px;text-transform:uppercase}
+
+/* ── CTA SECTION ── */
+.cta-section{padding:100px 48px;background:var(--navy);position:relative;overflow:hidden;text-align:center}
+.cta-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 80% at 50% 50%,rgba(201,151,42,.1) 0%,transparent 70%);pointer-events:none}
+.cta-section h2{font-family:'Playfair Display',serif;font-size:clamp(36px,5vw,58px);color:var(--ivory);font-weight:700;line-height:1.1;margin-bottom:20px;position:relative}
+.cta-section h2 em{color:var(--gold2);font-style:italic}
+.cta-section p{font-size:17px;color:rgba(248,243,232,.55);font-weight:300;max-width:500px;margin:0 auto 40px;line-height:1.7;position:relative}
+.cta-btns{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;position:relative}
+
+/* ── FOOTER ── */
+footer{background:rgba(7,13,30,.98);border-top:1px solid rgba(201,151,42,.15);padding:40px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px}
+.foot-left{font-size:12px;color:rgba(248,243,232,.3);font-weight:300;line-height:1.7}
+.foot-left strong{color:rgba(248,243,232,.5)}
+.foot-verse{font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:rgba(201,151,42,.5);max-width:360px;text-align:right;line-height:1.5}
+
+/* ══════════════════════════════
+   DASHBOARD
+══════════════════════════════ */
+.dash-layout{display:grid;grid-template-columns:240px 1fr;min-height:100vh;padding-top:68px;background:var(--cream)}
+
+/* SIDEBAR */
+.sidebar{background:var(--navy);border-right:1px solid rgba(201,151,42,.15);padding:24px 0;position:sticky;top:68px;height:calc(100vh - 68px);overflow-y:auto;display:flex;flex-direction:column}
+.sb-church{padding:16px 20px;margin:0 16px 20px;background:rgba(201,151,42,.08);border:1px solid rgba(201,151,42,.2);border-radius:10px}
+.sb-church-name{font-family:'Playfair Display',serif;font-size:15px;font-weight:600;color:var(--ivory);margin-bottom:2px}
+.sb-church-plan{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:700}
+.sb-section-label{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(201,151,42,.4);padding:0 20px;margin-bottom:8px;margin-top:8px;font-weight:700}
+.sb-item{display:flex;align-items:center;gap:11px;padding:10px 20px;font-size:13px;font-weight:400;color:rgba(248,243,232,.5);cursor:pointer;transition:all .15s;position:relative}
+.sb-item:hover{color:var(--ivory);background:rgba(201,151,42,.06)}
+.sb-item.active{color:var(--gold2);background:rgba(201,151,42,.1);border-left:3px solid var(--gold)}
+.sb-item.active{padding-left:17px}
+.sb-icon{font-size:16px;width:22px;text-align:center;opacity:.7}
+.sb-item.active .sb-icon,.sb-item:hover .sb-icon{opacity:1}
+.sb-spacer{flex:1}
+.sb-today{margin:16px;padding:14px;background:rgba(201,151,42,.08);border:1px solid rgba(201,151,42,.15);border-radius:10px}
+.sb-today-label{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(201,151,42,.5);margin-bottom:4px;font-weight:700}
+.sb-today-val{font-family:'Playfair Display',serif;font-size:20px;color:var(--gold2);font-weight:700}
+.sb-today-sub{font-size:10px;color:rgba(248,243,232,.35);margin-top:1px}
+
+/* MAIN DASH */
+.dash-main{padding:32px 36px;overflow-y:auto}
+.dash-topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:14px}
+.dash-title-block .dash-h1{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--navy)}
+.dash-title-block .dash-sub{font-size:13px;color:var(--text3);margin-top:2px;font-weight:300}
+.dash-actions{display:flex;gap:10px}
+.btn-dash-outline{background:transparent;border:1px solid var(--border2);color:var(--text2);padding:9px 20px;border-radius:6px;font-size:13px;font-weight:400;cursor:pointer;font-family:'Lato',sans-serif;transition:all .2s}
+.btn-dash-outline:hover{border-color:var(--gold);color:var(--gold);background:rgba(201,151,42,.04)}
+.btn-dash-outline:active{transform:scale(.97)}
+.btn-dash-gold{background:var(--gold);border:none;color:var(--navy);padding:10px 22px;border-radius:6px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Lato',sans-serif;transition:all .2s}
+.btn-dash-gold:hover{background:var(--gold2);transform:translateY(-1px);box-shadow:0 6px 20px rgba(201,151,42,.3)}
+.btn-dash-gold:active{transform:translateY(0);box-shadow:none}
+
+/* KPI cards */
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.kpi{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:20px;position:relative;overflow:hidden;transition:box-shadow .2s}
+.kpi:hover{box-shadow:0 8px 32px rgba(13,27,62,.08)}
+.kpi-accent{position:absolute;top:0;left:0;right:0;height:3px}
+.kpi-label{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:10px;font-weight:700}
+.kpi-val{font-family:'Playfair Display',serif;font-size:34px;font-weight:700;line-height:1;margin-bottom:6px}
+.kpi-delta{font-size:11px;color:var(--text3);display:flex;align-items:center;gap:4px}
+.up{color:var(--green)}.dn{color:var(--red)}
+
+/* Live engagement panel */
+.live-panel{background:var(--navy);border-radius:12px;padding:24px;margin-bottom:24px;position:relative;overflow:hidden}
+.live-panel::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 70% 30%,rgba(201,151,42,.08) 0%,transparent 65%);pointer-events:none}
+.live-panel-inner{display:grid;grid-template-columns:1fr 1fr 1fr;gap:24px;position:relative}
+.lp-label{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:rgba(201,151,42,.55);margin-bottom:12px;font-weight:700}
+
+/* Engagement arc */
+.arc-wrap{text-align:center}
+canvas#arc{display:block;margin:0 auto 8px}
+.arc-score{font-family:'Playfair Display',serif;font-size:44px;font-weight:700;color:var(--gold2);margin-top:-8px}
+.arc-label{font-size:11px;color:rgba(248,243,232,.4);font-weight:300}
+
+/* Response counters */
+.counter-list{display:flex;flex-direction:column;gap:10px}
+.counter-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(255,255,255,.04);border-radius:8px;border:1px solid rgba(255,255,255,.06)}
+.counter-word{font-size:13px;font-weight:600;color:var(--ivory);flex:1}
+.counter-bar-wrap{flex:2;height:4px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden}
+.counter-bar{height:100%;border-radius:2px;transition:width 1.2s ease}
+.counter-num{font-family:'Courier Prime',monospace;font-size:14px;font-weight:700;min-width:28px;text-align:right}
+
+/* Active verse panel */
+.verse-panel{display:flex;flex-direction:column;gap:10px}
+.av-card{background:rgba(201,151,42,.08);border:1px solid rgba(201,151,42,.2);border-radius:10px;padding:14px}
+.av-trigger{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(201,151,42,.6);margin-bottom:6px;font-weight:700}
+.av-verse{font-family:'Playfair Display',serif;font-size:13px;font-style:italic;color:var(--ivory);line-height:1.55;margin-bottom:5px}
+.av-ref{font-size:10px;color:var(--gold);font-weight:700}
+
+/* Charts / Analytics */
+.analytics-row{display:grid;grid-template-columns:2fr 1fr;gap:18px;margin-bottom:24px}
+.chart-card{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:22px}
+.cc-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px}
+.cc-title{font-family:'Playfair Display',serif;font-size:16px;font-weight:600;color:var(--navy)}
+.cc-sub{font-size:11px;color:var(--text3);margin-top:2px;font-weight:300}
+.bar-chart{display:flex;align-items:flex-end;gap:8px;height:110px}
+.bc-group{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px}
+.bc-bar{width:100%;border-radius:3px 3px 0 0;transition:height 1.2s ease;cursor:default}
+.bc-bar:hover{opacity:.8}
+.bc-label{font-size:9px;color:var(--text3);font-family:'Courier Prime',monospace}
+
+/* Bottom row */
+.bottom-row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.table-card{background:var(--white);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.tc-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.tc-title{font-family:'Playfair Display',serif;font-size:15px;font-weight:600;color:var(--navy)}
+.count-badge{background:var(--ivory2);border:1px solid var(--border);border-radius:100px;font-size:10px;color:var(--text2);padding:2px 10px;font-family:'Courier Prime',monospace;font-weight:700}
+table.dt{width:100%;border-collapse:collapse}
+table.dt th{font-size:9px;text-transform:uppercase;letter-spacing:.1em;color:var(--text3);padding:10px 16px;text-align:left;border-bottom:1px solid var(--border);background:var(--ivory);font-weight:700}
+table.dt td{padding:11px 16px;font-size:12px;color:var(--text2);border-bottom:1px solid var(--border)}
+table.dt tr:last-child td{border-bottom:none}
+table.dt tr:hover td{background:rgba(201,151,42,.03)}
+.pill{font-size:9px;padding:3px 9px;border-radius:100px;font-weight:700;letter-spacing:.06em}
+.pill-amen{background:rgba(30,132,73,.1);color:var(--green);border:1px solid rgba(30,132,73,.25)}
+.pill-praise{background:rgba(201,151,42,.1);color:var(--amber);border:1px solid rgba(201,151,42,.25)}
+.pill-high{background:rgba(13,27,62,.08);color:var(--navy);border:1px solid rgba(13,27,62,.15)}
+
+/* Coach suggestions */
+.suggest-list{padding:0}
+.suggest-item{padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;gap:12px}
+.suggest-item:last-child{border-bottom:none}
+.si-icon{width:32px;height:32px;border-radius:8px;background:rgba(201,151,42,.1);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;margin-top:1px;border:1px solid rgba(201,151,42,.2)}
+.si-text{font-size:12px;color:var(--text2);line-height:1.65;font-weight:300}
+.si-text strong{color:var(--navy);font-weight:700}
+
+/* Notifications */
+.notification{position:fixed;bottom:28px;right:28px;background:var(--navy);border:1px solid var(--gold);border-radius:10px;padding:14px 18px;display:flex;align-items:center;gap:12px;font-size:13px;color:var(--ivory);z-index:500;animation:slideNotif .4s ease;box-shadow:0 12px 40px rgba(0,0,0,.3);max-width:340px}
+@keyframes slideNotif{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.notif-icon{font-size:20px;flex-shrink:0}
+.notif-dismiss{background:none;border:none;color:rgba(248,243,232,.4);cursor:pointer;font-size:16px;padding:0 0 0 8px;transition:color .2s}
+.notif-dismiss:hover{color:var(--gold2)}
+
+@media(max-width:1000px){.hero-inner{grid-template-columns:1fr}.hero-card{display:none}.features-grid{grid-template-columns:1fr 1fr}.steps-grid{grid-template-columns:1fr 1fr}.pricing-grid{grid-template-columns:1fr 1fr}.testi-grid{grid-template-columns:1fr}.dash-layout{grid-template-columns:1fr}.sidebar{display:none}.kpi-row{grid-template-columns:1fr 1fr}.live-panel-inner{grid-template-columns:1fr}.analytics-row{grid-template-columns:1fr}.bottom-row{grid-template-columns:1fr}nav{padding:0 24px}}
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav>
+  <a class="nav-logo" onclick="showLanding()">
+    <!-- SVG Logo: Open Bible with sound wave -->
+    <svg class="logo-svg" viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Book spine -->
+      <rect x="19" y="8" width="4" height="26" rx="1" fill="#c9972a"/>
+      <!-- Left page -->
+      <path d="M4 10 C4 10 18 11 19 12 L19 34 C19 34 5 33 4 32 Z" fill="#1e3166" stroke="#c9972a" stroke-width=".8"/>
+      <!-- Right page -->
+      <path d="M38 10 C38 10 24 11 23 12 L23 34 C23 34 37 33 38 32 Z" fill="#1e3166" stroke="#c9972a" stroke-width=".8"/>
+      <!-- Lines on left page -->
+      <line x1="7" y1="17" x2="17" y2="16.5" stroke="#c9972a" stroke-width=".6" opacity=".5"/>
+      <line x1="7" y1="20" x2="17" y2="19.5" stroke="#c9972a" stroke-width=".6" opacity=".5"/>
+      <line x1="7" y1="23" x2="17" y2="22.5" stroke="#c9972a" stroke-width=".6" opacity=".4"/>
+      <!-- Lines on right page -->
+      <line x1="25" y1="16.5" x2="35" y2="17" stroke="#c9972a" stroke-width=".6" opacity=".5"/>
+      <line x1="25" y1="19.5" x2="35" y2="20" stroke="#c9972a" stroke-width=".6" opacity=".5"/>
+      <line x1="25" y1="22.5" x2="35" y2="23" stroke="#c9972a" stroke-width=".6" opacity=".4"/>
+      <!-- Sound wave on right side -->
+      <path d="M26 27 Q28 24 30 27 Q32 30 34 27" stroke="#e8b84b" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+      <path d="M27.5 25 Q30 21 32.5 25" stroke="#e8b84b" stroke-width="1" fill="none" stroke-linecap="round" opacity=".6"/>
+      <!-- Cross on cover spine area -->
+      <line x1="21" y1="14" x2="21" y2="22" stroke="#f5d57a" stroke-width="1.2" stroke-linecap="round"/>
+      <line x1="18.5" y1="16.5" x2="23.5" y2="16.5" stroke="#f5d57a" stroke-width="1.2" stroke-linecap="round"/>
+    </svg>
+    <div class="logo-text">
+      <div class="logo-name">SermonIQ</div>
+      <div class="logo-tagline">Ministry Intelligence</div>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a onclick="showLanding()">Features</a>
+    <a>How It Works</a>
+    <a>Pricing</a>
+    <a>Scripture Engine</a>
+  </div>
+  <div class="nav-btns">
+    <button class="btn-nav-ghost" onclick="showLanding()">Home</button>
+    <button class="btn-nav-gold" onclick="showDashboard()">Open Dashboard →</button>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════
+     LANDING PAGE
+══════════════════════════════════ -->
+<div id="landing">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-badge">
+        <div class="hero-badge-dot"></div>
+        Live Sermon Intelligence · Available Now
+      </div>
+      <h1 class="hero-h1">Every <em>"Amen"</em><br>is a data point.<br>Start listening.</h1>
+      <p class="hero-sub">SermonIQ tracks congregation response in real time, surfaces relevant Bible verses on demand, and gives pastors actionable coaching to deliver sermons that move hearts — Sunday after Sunday.</p>
+      <div class="hero-ctas">
+        <button class="btn-hero-primary" onclick="showDashboard()">
+          <span>Open Live Dashboard</span>
+          <span>→</span>
+        </button>
+        <button class="btn-hero-outline" onclick="notify('Demo request sent! Our team will reach out within 24 hours. God bless! 🙏')">Watch a Demo</button>
+      </div>
+      <div class="hero-social-proof">
+        <div class="proof-avatars">
+          <div class="proof-av">✝</div>
+          <div class="proof-av">🎙</div>
+          <div class="proof-av">📖</div>
+          <div class="proof-av">⛪</div>
+        </div>
+        <div class="proof-text">Trusted by <strong>2,400+ churches</strong> across 38 states</div>
+      </div>
+    </div>
+    <!-- Live preview card -->
+    <div class="hero-card">
+      <div class="hc-header">
+        <div class="hc-title">Live Service Monitor</div>
+        <div class="live-badge"><div class="hero-badge-dot"></div>LIVE</div>
+      </div>
+      <div class="eng-meter">
+        <div class="eng-label">
+          <div class="eng-label-text">Congregation Engagement</div>
+          <div class="eng-score" id="heroScore">0</div>
+        </div>
+        <div class="meter-track">
+          <div class="meter-fill" id="heroMeter"></div>
+        </div>
+      </div>
+      <div class="kw-grid">
+        <div class="kw-pill"><span class="kw-name">Amen</span><span class="kw-count gold" id="hAmen">0</span></div>
+        <div class="kw-pill"><span class="kw-name">Alleluia</span><span class="kw-count green" id="hAlleluia">0</span></div>
+        <div class="kw-pill"><span class="kw-name">Glory</span><span class="kw-count amber" id="hGlory">0</span></div>
+        <div class="kw-pill"><span class="kw-name">Preach!</span><span class="kw-count gold" id="hPreach">0</span></div>
+      </div>
+      <div class="verse-box">
+        <div class="verse-label">✦ Active Verse Suggestion</div>
+        <div class="verse-text" id="heroVerse">"Fear not, for I am with you; be not dismayed, for I am your God..."</div>
+        <div class="verse-ref">— Isaiah 41:10 · ESV</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features">
+  <div class="section-inner">
+    <div class="section-eyebrow">Core Features</div>
+    <h2 class="section-h2">Everything a pastor needs<br>to <em>understand</em> their congregation</h2>
+    <p class="section-sub">From the first "Amen" to the final altar call — SermonIQ captures, analyzes, and transforms every moment of your service into actionable ministry intelligence.</p>
+    <div class="features-grid">
+      <div class="feat-card">
+        <div class="feat-icon">🎙️</div>
+        <div class="feat-title">Live Transcription</div>
+        <div class="feat-body">Real-time speech-to-text captures every word of your sermon with speaker diarization, timestamp precision, and multilingual support. Full transcripts stored permanently in the cloud.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🔥</div>
+        <div class="feat-title">Response Detection</div>
+        <div class="feat-body">Detects Amen, Alleluia, "Preach!", applause, laughter, and weeping. Each response is timestamped and scored against the sermon transcript to reveal your most impactful moments.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">📖</div>
+        <div class="feat-title">Scripture Intelligence</div>
+        <div class="feat-body">Semantic AI matches sermon themes to relevant Bible verses in real time. Supports KJV, NIV, ESV, NKJV, and NLT. The right verse surfaces at exactly the right moment.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">📊</div>
+        <div class="feat-title">Engagement Analytics</div>
+        <div class="feat-body">Visual engagement heatmaps, keyword frequency charts, and congregation sentiment scores give pastors a complete picture of every service within 30 minutes of closing prayer.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🧠</div>
+        <div class="feat-title">Sermon Reframing Coach</div>
+        <div class="feat-body">AI-powered coaching identifies what resonated most and suggests structural improvements for next week — story placement, opening hooks, transition timing, and language style.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🗓️</div>
+        <div class="feat-title">Annual Service Planner</div>
+        <div class="feat-body">Aggregate a full year of service data into a 52-week sermon calendar, congregation spiritual profile, and seasonal trend report that shapes your entire ministry vision.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how">
+  <div class="section-inner">
+    <div class="section-eyebrow" style="color:rgba(201,151,42,.7)">The Process</div>
+    <h2 class="section-h2" style="color:var(--ivory)">From first word to<br><em>lasting insight</em></h2>
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-title">Listen</div>
+        <div class="step-body">SermonIQ connects to your existing AV system or a simple microphone array. Setup takes under 10 minutes. No technical expertise required.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-title">Detect</div>
+        <div class="step-body">Every Amen, Alleluia, and spontaneous response is captured, scored, and mapped to the exact moment in your sermon where it occurred.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-title">Illuminate</div>
+        <div class="step-body">Relevant Bible verses surface in real time on the pastor's tablet. The congregation's response shapes which verses appear — live, dynamic, contextual.</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-title">Grow</div>
+        <div class="step-body">Post-service reports, monthly trends, and annual planning tools help every sermon be better than the last. Your ministry gets smarter over time.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testi">
+  <div class="section-inner">
+    <div class="section-eyebrow">Testimonials</div>
+    <h2 class="section-h2">Pastors who trust<br><em>SermonIQ</em></h2>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"I had no idea my congregation responded three times more to personal testimony than doctrine. SermonIQ showed me in my first week. It completely changed how I structure my messages."</div>
+        <div class="testi-author"><div class="testi-av">✝</div><div><div class="testi-name">Rev. Marcus Thompson</div><div class="testi-church">Grace Fellowship Church, Atlanta GA · 1,200 members</div></div></div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"The scripture suggestions during the service are remarkable. Verses I hadn't planned to use appeared right when the congregation was ready to receive them. It feels like divine confirmation."</div>
+        <div class="testi-author"><div class="testi-av">📖</div><div><div class="testi-name">Pastor Diane Okafor</div><div class="testi-church">Cornerstone Community Church, Houston TX · 680 members</div></div></div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">"The annual planner showed us that our July services consistently underperform. We launched a summer revival series based on that data and had our highest attendance in 8 years."</div>
+        <div class="testi-author"><div class="testi-av">⛪</div><div><div class="testi-name">Bishop Raymond Cole</div><div class="testi-church">New Life Cathedral, Chicago IL · 3,400 members</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing">
+  <div class="section-inner">
+    <div class="section-eyebrow">Pricing</div>
+    <h2 class="section-h2">Plans for every<br><em>congregation</em></h2>
+    <p class="section-sub">14-day free trial on all plans. No credit card required. Cancel anytime.</p>
+    <div class="pricing-grid">
+      <div class="plan">
+        <div class="plan-name">Seed</div>
+        <div class="plan-price">$49<span>/mo</span></div>
+        <div class="plan-for">For small congregations under 100 members beginning their digital ministry journey.</div>
+        <div class="plan-divider"></div>
+        <div class="plan-feat"><span class="ck">✦</span>Live transcription</div>
+        <div class="plan-feat"><span class="ck">✦</span>Keyword detection</div>
+        <div class="plan-feat"><span class="ck">✦</span>Monthly report</div>
+        <div class="plan-feat"><span class="ck">✦</span>3 Bible translations</div>
+        <button class="plan-btn" onclick="notify('Starting your 14-day free trial! No credit card needed. Welcome to SermonIQ! 🙏')">Start Free Trial</button>
+      </div>
+      <div class="plan featured">
+        <div class="plan-badge">Most Popular</div>
+        <div class="plan-name">Growth</div>
+        <div class="plan-price">$149<span>/mo</span></div>
+        <div class="plan-for" style="color:rgba(248,243,232,.5)">For growing churches of 100–500 members ready for full ministry intelligence.</div>
+        <div class="plan-divider"></div>
+        <div class="plan-feat"><span class="ck">✦</span>Everything in Seed</div>
+        <div class="plan-feat"><span class="ck">✦</span>Scripture AI engine</div>
+        <div class="plan-feat"><span class="ck">✦</span>Reframing coach</div>
+        <div class="plan-feat"><span class="ck">✦</span>Annual planner</div>
+        <div class="plan-feat"><span class="ck">✦</span>All 5 translations</div>
+        <button class="plan-btn" onclick="notify('Growth plan selected! Preparing your dashboard... God bless your ministry! ✝')">Start Free Trial</button>
+      </div>
+      <div class="plan">
+        <div class="plan-name">Revival</div>
+        <div class="plan-price">$299<span>/mo</span></div>
+        <div class="plan-for">For churches of 500–2,000 with multi-campus needs and advanced congregation tracking.</div>
+        <div class="plan-divider"></div>
+        <div class="plan-feat"><span class="ck">✦</span>Everything in Growth</div>
+        <div class="plan-feat"><span class="ck">✦</span>Voice recognition</div>
+        <div class="plan-feat"><span class="ck">✦</span>Member profiles</div>
+        <div class="plan-feat"><span class="ck">✦</span>Multi-campus support</div>
+        <button class="plan-btn" onclick="notify('Revival plan selected! Our onboarding team will contact you within 24 hours.')">Start Free Trial</button>
+      </div>
+      <div class="plan">
+        <div class="plan-name">Cathedral</div>
+        <div class="plan-price">Custom</div>
+        <div class="plan-for">For megachurches and denominations with 2,000+ members and enterprise requirements.</div>
+        <div class="plan-divider"></div>
+        <div class="plan-feat"><span class="ck">✦</span>Everything in Revival</div>
+        <div class="plan-feat"><span class="ck">✦</span>API access</div>
+        <div class="plan-feat"><span class="ck">✦</span>White-label dashboard</div>
+        <div class="plan-feat"><span class="ck">✦</span>Dedicated support</div>
+        <button class="plan-btn" onclick="notify('Thank you! A SermonIQ ministry consultant will reach out within 2 business days.')">Contact Us</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>Ready to <em>transform</em><br>your ministry?</h2>
+  <p>Join 2,400+ churches using SermonIQ to preach with greater impact, clarity, and congregational connection.</p>
+  <div class="cta-btns">
+    <button class="btn-hero-primary" onclick="showDashboard()">Open Live Dashboard →</button>
+    <button class="btn-hero-outline" onclick="notify('Demo request sent! Our team will reach out within 24 hours.')">Schedule a Demo</button>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-left">
+    <strong>SermonIQ™</strong> · Ministry Intelligence Platform<br>
+    © 2026 SermonIQ Inc. · Privacy Policy · Terms of Service · GDPR Compliant
+  </div>
+  <div class="foot-verse">"Your word is a lamp to my feet and a light to my path." — Psalm 119:105</div>
+</footer>
+
+</div><!-- /landing -->
+
+
+<!-- ══════════════════════════════════
+     DASHBOARD
+══════════════════════════════════ -->
+<div id="dashboard">
+<div class="dash-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div style="padding:0 16px;margin-bottom:16px">
+      <div class="sb-church">
+        <div class="sb-church-name">Grace Fellowship</div>
+        <div class="sb-church-plan">✦ Growth Plan · Active</div>
+      </div>
+    </div>
+    <div class="sb-section-label">This Service</div>
+    <div class="sb-item active"><span class="sb-icon">◈</span>Live Dashboard</div>
+    <div class="sb-item"><span class="sb-icon">🎙</span>Live Transcript</div>
+    <div class="sb-item"><span class="sb-icon">📖</span>Scripture Feed</div>
+    <div class="sb-item"><span class="sb-icon">🔥</span>Response Map</div>
+    <div style="height:12px"></div>
+    <div class="sb-section-label">Analytics</div>
+    <div class="sb-item"><span class="sb-icon">📊</span>Engagement Reports</div>
+    <div class="sb-item"><span class="sb-icon">📈</span>Sermon History</div>
+    <div class="sb-item"><span class="sb-icon">🧠</span>Coaching Insights</div>
+    <div class="sb-item"><span class="sb-icon">🗓</span>Annual Planner</div>
+    <div style="height:12px"></div>
+    <div class="sb-section-label">Congregation</div>
+    <div class="sb-item"><span class="sb-icon">🎤</span>Member Voices</div>
+    <div class="sb-item"><span class="sb-icon">👥</span>Profiles</div>
+    <div class="sb-spacer"></div>
+    <div class="sb-today">
+      <div class="sb-today-label">Today's Revenue</div>
+      <div class="sb-today-val">$0</div>
+      <div class="sb-today-sub" id="todayDate">Loading...</div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="dash-main">
+    <div class="dash-topbar">
+      <div class="dash-title-block">
+        <div class="dash-h1">Sunday Morning Service</div>
+        <div class="dash-sub" id="dashDateSub">Loading date...</div>
+      </div>
+      <div class="dash-actions">
+        <button class="btn-dash-outline" onclick="showLanding()">← Back to Site</button>
+        <button class="btn-dash-outline" onclick="notify('Engagement report is being generated and will be emailed to you within 30 minutes.')">Export Report</button>
+        <button class="btn-dash-gold" onclick="notify('Sermon reframing suggestions are ready! Check the coaching panel below.')">Get Coaching Tips ✦</button>
+      </div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="kpi-row">
+      <div class="kpi">
+        <div class="kpi-accent" style="background:linear-gradient(90deg,var(--gold),var(--gold2))"></div>
+        <div class="kpi-label">Engagement Score</div>
+        <div class="kpi-val" style="color:var(--gold)" id="kEng">0</div>
+        <div class="kpi-delta"><span class="up">↑ 12pts</span> vs last Sunday</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-accent" style="background:linear-gradient(90deg,var(--green),#4ecb71)"></div>
+        <div class="kpi-label">Total Responses</div>
+        <div class="kpi-val" style="color:var(--green)" id="kResp">0</div>
+        <div class="kpi-delta"><span class="up">↑ 34</span> more than average</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-accent" style="background:linear-gradient(90deg,var(--navy2),var(--navy3))"></div>
+        <div class="kpi-label">Verses Surfaced</div>
+        <div class="kpi-val" style="color:var(--navy)" id="kVerse">0</div>
+        <div class="kpi-delta"><span class="up">↑ 8</span> used by pastor</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-accent" style="background:linear-gradient(90deg,#c0392b,#e74c3c)"></div>
+        <div class="kpi-label">Attendance</div>
+        <div class="kpi-val" style="color:var(--red)">342</div>
+        <div class="kpi-delta"><span class="up">↑ 28</span> vs last Sunday</div>
+      </div>
+    </div>
+
+    <!-- LIVE ENGAGEMENT PANEL -->
+    <div class="live-panel">
+      <div class="live-panel-inner">
+        <!-- Arc meter -->
+        <div class="arc-wrap">
+          <div class="lp-label">Live Engagement</div>
+          <canvas id="arc" width="140" height="80"></canvas>
+          <div class="arc-score" id="arcScore">0</div>
+          <div class="arc-label">/ 100 congregation pulse</div>
+        </div>
+        <!-- Response counters -->
+        <div>
+          <div class="lp-label">Response Keywords</div>
+          <div class="counter-list">
+            <div class="counter-item">
+              <div class="counter-word">Amen</div>
+              <div class="counter-bar-wrap"><div class="counter-bar" id="cb1" style="background:var(--gold2);width:0%"></div></div>
+              <div class="counter-num" style="color:var(--gold2)" id="cn1">0</div>
+            </div>
+            <div class="counter-item">
+              <div class="counter-word">Alleluia</div>
+              <div class="counter-bar-wrap"><div class="counter-bar" id="cb2" style="background:#4ecb71;width:0%"></div></div>
+              <div class="counter-num" style="color:#4ecb71" id="cn2">0</div>
+            </div>
+            <div class="counter-item">
+              <div class="counter-word">Glory</div>
+              <div class="counter-bar-wrap"><div class="counter-bar" id="cb3" style="background:var(--amber);width:0%"></div></div>
+              <div class="counter-num" style="color:var(--amber)" id="cn3">0</div>
+            </div>
+            <div class="counter-item">
+              <div class="counter-word">Preach!</div>
+              <div class="counter-bar-wrap"><div class="counter-bar" id="cb4" style="background:#9b82f5;width:0%"></div></div>
+              <div class="counter-num" style="color:#9b82f5" id="cn4">0</div>
+            </div>
+          </div>
+        </div>
+        <!-- Active verses -->
+        <div class="verse-panel">
+          <div class="lp-label">Active Verse Suggestions</div>
+          <div class="av-card">
+            <div class="av-trigger">✦ Triggered by: "breakthrough"</div>
+            <div class="av-verse">"Behold, I am doing a new thing; now it springs forth, do you not perceive it?"</div>
+            <div class="av-ref">Isaiah 43:19 · ESV</div>
+          </div>
+          <div class="av-card">
+            <div class="av-trigger">✦ Triggered by: "faith"</div>
+            <div class="av-verse">"Now faith is the assurance of things hoped for, the conviction of things not seen."</div>
+            <div class="av-ref">Hebrews 11:1 · ESV</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ANALYTICS ROW -->
+    <div class="analytics-row">
+      <div class="chart-card">
+        <div class="cc-header">
+          <div>
+            <div class="cc-title">Engagement Timeline — This Service</div>
+            <div class="cc-sub">Response intensity mapped across sermon duration</div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:center">
+            <span style="display:flex;align-items:center;gap:4px;font-size:11px;color:var(--text3)"><span style="width:10px;height:10px;border-radius:2px;background:var(--gold);display:inline-block"></span>Engagement</span>
+            <span style="display:flex;align-items:center;gap:4px;font-size:11px;color:var(--text3)"><span style="width:10px;height:10px;border-radius:2px;background:rgba(201,151,42,.25);display:inline-block"></span>Avg</span>
+          </div>
+        </div>
+        <div class="bar-chart" id="barChart"></div>
+        <div style="display:flex;justify-content:space-between;margin-top:6px;padding:0 2px">
+          <span style="font-size:9px;color:var(--text3);font-family:'Courier Prime',monospace">0:00</span>
+          <span style="font-size:9px;color:var(--text3);font-family:'Courier Prime',monospace">Opening Prayer</span>
+          <span style="font-size:9px;color:var(--text3);font-family:'Courier Prime',monospace">Sermon</span>
+          <span style="font-size:9px;color:var(--text3);font-family:'Courier Prime',monospace">Altar Call</span>
+          <span style="font-size:9px;color:var(--text3);font-family:'Courier Prime',monospace">Close</span>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="cc-header">
+          <div>
+            <div class="cc-title">This Month's Trend</div>
+            <div class="cc-sub">Average engagement per Sunday</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="font-size:11px;color:var(--text3);width:40px;font-family:'Courier Prime',monospace">Apr 6</div>
+            <div style="flex:1;height:6px;background:var(--ivory2);border-radius:3px;overflow:hidden"><div style="height:100%;width:72%;background:var(--gold);border-radius:3px;transition:width 1.5s ease" class="trend-bar"></div></div>
+            <div style="font-size:12px;font-weight:700;color:var(--navy);width:30px">72</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="font-size:11px;color:var(--text3);width:40px;font-family:'Courier Prime',monospace">Apr 13</div>
+            <div style="flex:1;height:6px;background:var(--ivory2);border-radius:3px;overflow:hidden"><div style="height:100%;width:68%;background:var(--gold);border-radius:3px;transition:width 1.6s ease;transition-delay:.1s" class="trend-bar"></div></div>
+            <div style="font-size:12px;font-weight:700;color:var(--navy);width:30px">68</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="font-size:11px;color:var(--text3);width:40px;font-family:'Courier Prime',monospace">Apr 20</div>
+            <div style="flex:1;height:6px;background:var(--ivory2);border-radius:3px;overflow:hidden"><div style="height:100%;width:81%;background:var(--gold2);border-radius:3px;transition:width 1.7s ease;transition-delay:.2s" class="trend-bar"></div></div>
+            <div style="font-size:12px;font-weight:700;color:var(--navy);width:30px">81</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="font-size:11px;color:var(--text3);width:40px;font-family:'Courier Prime',monospace">Today</div>
+            <div style="flex:1;height:6px;background:var(--ivory2);border-radius:3px;overflow:hidden"><div style="height:100%;width:0%;background:var(--gold2);border-radius:3px;transition:width 1.8s ease;transition-delay:.3s" id="todayBar"></div></div>
+            <div style="font-size:12px;font-weight:700;color:var(--gold);width:30px" id="todayScore">—</div>
+          </div>
+        </div>
+        <div style="margin-top:20px;padding:12px;background:rgba(201,151,42,.06);border-radius:8px;border:1px solid rgba(201,151,42,.15)">
+          <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:4px">Month Average</div>
+          <div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--navy)" id="monthAvg">—</div>
+          <div style="font-size:11px;color:var(--text3);margin-top:2px">↑ 6.2pts vs March average</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM ROW -->
+    <div class="bottom-row">
+      <!-- Response log -->
+      <div class="table-card">
+        <div class="tc-header">
+          <div class="tc-title">Live Response Log</div>
+          <div class="count-badge" id="respCount">Loading...</div>
+        </div>
+        <table class="dt">
+          <thead><tr><th>Time</th><th>Response</th><th>Type</th><th>Topic Trigger</th><th>Score</th></tr></thead>
+          <tbody id="responseTable">
+            <tr><td style="font-family:'Courier Prime',monospace">11:04</td><td style="font-weight:700">Amen</td><td><span class="pill pill-amen">Affirmation</span></td><td style="font-size:11px;color:var(--text3)">"God's grace is sufficient"</td><td style="font-weight:700;color:var(--gold)">9.2</td></tr>
+            <tr><td style="font-family:'Courier Prime',monospace">11:11</td><td style="font-weight:700">Alleluia</td><td><span class="pill pill-praise">Praise</span></td><td style="font-size:11px;color:var(--text3)">"He is faithful in every season"</td><td style="font-weight:700;color:var(--gold)">9.8</td></tr>
+            <tr><td style="font-family:'Courier Prime',monospace">11:18</td><td style="font-weight:700">Preach!</td><td><span class="pill pill-high">Peak</span></td><td style="font-size:11px;color:var(--text3)">"Your breakthrough is coming"</td><td style="font-weight:700;color:var(--gold)">10.0</td></tr>
+            <tr><td style="font-family:'Courier Prime',monospace">11:24</td><td style="font-weight:700">Amen</td><td><span class="pill pill-amen">Affirmation</span></td><td style="font-size:11px;color:var(--text3)">"Even in the valley, He walks"</td><td style="font-weight:700;color:var(--gold)">8.7</td></tr>
+            <tr><td style="font-family:'Courier Prime',monospace">11:31</td><td style="font-weight:700">Applause</td><td><span class="pill pill-high">Peak</span></td><td style="font-size:11px;color:var(--text3)">"Healing testimony shared"</td><td style="font-weight:700;color:var(--gold)">9.5</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Coaching -->
+      <div class="table-card">
+        <div class="tc-header">
+          <div class="tc-title">Sermon Coach Suggestions</div>
+          <div class="count-badge">5 insights</div>
+        </div>
+        <div class="suggest-list">
+          <div class="suggest-item"><div class="si-icon">📈</div><div class="si-text"><strong>Peak window is 15–25 min.</strong> Your congregation's engagement peaks between minutes 15–25. Move your core message into this window next Sunday.</div></div>
+          <div class="suggest-item"><div class="si-icon">📖</div><div class="si-text"><strong>Lead with testimony.</strong> Personal stories drove 3× more Amens than doctrinal statements. Open next week's message with a testimony before the teaching.</div></div>
+          <div class="suggest-item"><div class="si-icon">🔥</div><div class="si-text"><strong>"Breakthrough" is your hot word.</strong> This term triggered 14 responses today. Build a 4-week series: <em>"The Anatomy of a Breakthrough."</em></div></div>
+          <div class="suggest-item"><div class="si-icon">⏱</div><div class="si-text"><strong>Engagement dipped at minute 28.</strong> The theological explanation section lost 22 points. Try a shorter illustration or pause for congregational participation here.</div></div>
+          <div class="suggest-item"><div class="si-icon">✦</div><div class="si-text"><strong>Isaiah 41:10 worked best.</strong> This verse triggered the highest emotional response of the service. Consider it as your anchor verse next week.</div></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+</div><!-- /dashboard -->
+
+<!-- Notification -->
+<div id="notif" style="display:none" class="notification">
+  <span class="notif-icon">✦</span>
+  <span id="notifText"></span>
+  <button class="notif-dismiss" onclick="closeNotif()">✕</button>
+</div>
+
+<script>
+/* ══ PAGE SWITCHING ══ */
+function showLanding(){
+  document.getElementById('landing').style.display='block';
+  document.getElementById('dashboard').style.display='none';
+}
+function showDashboard(){
+  document.getElementById('landing').style.display='none';
+  document.getElementById('dashboard').style.display='block';
+  initDashboard();
+}
+
+/* ══ NOTIFICATIONS ══ */
+let notifTimer;
+function notify(msg){
+  const el=document.getElementById('notif');
+  const txt=document.getElementById('notifText');
+  txt.textContent=msg;
+  el.style.display='flex';
+  clearTimeout(notifTimer);
+  notifTimer=setTimeout(()=>closeNotif(),5000);
+}
+function closeNotif(){
+  document.getElementById('notif').style.display='none';
+}
+
+/* ══ HERO LIVE PREVIEW ══ */
+const heroVerses=[
+  {text:'"Fear not, for I am with you; be not dismayed, for I am your God..."',ref:'Isaiah 41:10 · ESV'},
+  {text:'"I can do all things through him who strengthens me."',ref:'Philippians 4:13 · ESV'},
+  {text:'"The Lord is my shepherd; I shall not want."',ref:'Psalm 23:1 · ESV'},
+  {text:'"Behold, I am doing a new thing; now it springs forth, do you not perceive it?"',ref:'Isaiah 43:19 · ESV'},
+  {text:'"For I know the plans I have for you, declares the Lord, plans for welfare and not for evil..."',ref:'Jeremiah 29:11 · ESV'},
+];
+let heroAmen=0,heroAlleluia=0,heroGlory=0,heroPreach=0,heroEngScore=0;
+function animNum(el,target,dec,dur){
+  if(!el)return;
+  const s=Date.now();
+  function u(){
+    const p=Math.min((Date.now()-s)/dur,1);
+    const e=1-Math.pow(1-p,3);
+    el.textContent=(target*e).toFixed(dec);
+    if(p<1)requestAnimationFrame(u);
+  }
+  requestAnimationFrame(u);
+}
+setTimeout(()=>{
+  const meter=document.getElementById('heroMeter');
+  const score=document.getElementById('heroScore');
+  if(meter){meter.style.width='78%'}
+  animNum(score,78,0,1800);
+  animNum(document.getElementById('hAmen'),42,0,1600);
+  animNum(document.getElementById('hAlleluia'),18,0,1700);
+  animNum(document.getElementById('hGlory'),11,0,1500);
+  animNum(document.getElementById('hPreach'),7,0,1400);
+  heroAmen=42;heroAlleluia=18;heroGlory=11;heroPreach=7;heroEngScore=78;
+},500);
+
+// Cycle verses
+setInterval(()=>{
+  const v=heroVerses[Math.floor(Math.random()*heroVerses.length)];
+  const el=document.getElementById('heroVerse');
+  if(el){el.style.opacity=0;setTimeout(()=>{el.textContent=v.text;el.style.opacity=1;el.parentElement.querySelector('.verse-ref').textContent='— '+v.ref},300)}
+  // Increment random counter
+  const counters=[{id:'hAmen',v:'heroAmen'},{id:'hAlleluia',v:'heroAlleluia'},{id:'hGlory',v:'heroGlory'},{id:'hPreach',v:'heroPreach'}];
+  const c=counters[Math.floor(Math.random()*counters.length)];
+  const cel=document.getElementById(c.id);
+  if(cel){const cur=parseInt(cel.textContent)||0;cel.textContent=cur+Math.floor(Math.random()*3+1)}
+},4000);
+
+/* ══ DASHBOARD INIT ══ */
+let dashInited=false;
+function initDashboard(){
+  if(dashInited)return;dashInited=true;
+  // Dates
+  const now=new Date();
+  const fmt=now.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  const fmtShort=now.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  const el=document.getElementById('dashDateSub');if(el)el.textContent=fmt+' · 10:45 AM Service';
+  const td=document.getElementById('todayDate');if(td)td.textContent=fmtShort;
+
+  // KPIs
+  setTimeout(()=>{
+    animNum(document.getElementById('kEng'),81,0,1600);
+    animNum(document.getElementById('kResp'),187,0,1800);
+    animNum(document.getElementById('kVerse'),24,0,1400);
+  },200);
+
+  // Arc
+  drawArc(0);
+  setTimeout(()=>{
+    animArc(81);
+    animNum(document.getElementById('arcScore'),81,0,1800);
+    document.getElementById('todayBar').style.width='81%';
+    document.getElementById('todayScore').textContent='81';
+    document.getElementById('monthAvg').textContent='76';
+  },400);
+
+  // Counter bars
+  setTimeout(()=>{
+    setCounter('cb1','cn1',82,147,'var(--gold2)');
+    setCounter('cb2','cn2',38,64,'#4ecb71');
+    setCounter('cb3','cn3',25,42,'var(--amber)');
+    setCounter('cb4','cn4',15,25,'#9b82f5');
+  },600);
+
+  // Bar chart
+  buildBarChart();
+
+  // Trend bars
+  setTimeout(()=>{document.querySelectorAll('.trend-bar').forEach(b=>{})},300);
+
+  // Response counter badge
+  let rc=187;
+  const rcEl=document.getElementById('respCount');if(rcEl)rcEl.textContent=rc+' responses';
+  setInterval(()=>{
+    rc+=Math.floor(Math.random()*4+1);
+    if(rcEl)rcEl.textContent=rc+' responses';
+    addTableRow();
+    // Increment counters
+    const ids=[['cb1','cn1',147],['cb2','cn2',64],['cb3','cn3',42],['cb4','cn4',25]];
+    const pick=ids[Math.floor(Math.random()*ids.length)];
+    const curN=parseInt(document.getElementById(pick[1]).textContent)||0;
+    const newN=curN+Math.floor(Math.random()*3+1);
+    document.getElementById(pick[1]).textContent=newN;
+    document.getElementById(pick[0]).style.width=Math.min(99,(newN/pick[2])*100)+'%';
+  },4500);
+}
+
+function setCounter(barId,numId,pct,target,color){
+  const bar=document.getElementById(barId);const num=document.getElementById(numId);
+  if(bar){bar.style.width=pct+'%'}
+  animNum(num,target,0,1600);
+}
+
+function drawArc(score){
+  const c=document.getElementById('arc');if(!c)return;
+  const ctx=c.getContext('2d');
+  ctx.clearRect(0,0,140,80);
+  const cx=70,cy=75,r=58;
+  // Track
+  ctx.beginPath();ctx.arc(cx,cy,r,Math.PI,0,false);
+  ctx.strokeStyle='rgba(255,255,255,.08)';ctx.lineWidth=10;ctx.lineCap='round';ctx.stroke();
+  // Fill
+  if(score>0){
+    const endAngle=Math.PI+(score/100)*Math.PI;
+    const grad=ctx.createLinearGradient(10,0,130,0);
+    grad.addColorStop(0,'#c9972a');grad.addColorStop(1,'#f5d57a');
+    ctx.beginPath();ctx.arc(cx,cy,r,Math.PI,endAngle,false);
+    ctx.strokeStyle=grad;ctx.lineWidth=10;ctx.lineCap='round';ctx.stroke();
+  }
+}
+function animArc(target){
+  let cur=0;
+  const iv=setInterval(()=>{
+    cur+=1.2;if(cur>=target){cur=target;clearInterval(iv)}
+    drawArc(cur);
+  },18);
+}
+
+function buildBarChart(){
+  const container=document.getElementById('barChart');if(!container)return;
+  const labels=['0','5','10','15','20','25','30','35','40','45','50','55'];
+  const vals=[35,42,55,68,82,91,76,88,95,72,60,45];
+  const avgs=[50,52,54,56,58,60,58,56,54,52,50,48];
+  const maxV=100;
+  container.innerHTML='';
+  labels.forEach((l,i)=>{
+    const h=Math.round((vals[i]/maxV)*100);
+    const ah=Math.round((avgs[i]/maxV)*100);
+    const g=document.createElement('div');g.className='bc-group';
+    g.innerHTML=`<div style="display:flex;align-items:flex-end;gap:2px;height:100%">
+      <div class="bc-bar" style="flex:1;height:0px;background:var(--gold);transition:height 1.2s ease ${i*.06}s" data-h="${h}"></div>
+      <div class="bc-bar" style="width:3px;height:0px;background:rgba(201,151,42,.25);transition:height 1.2s ease ${i*.06+.03}s" data-h="${ah}"></div>
+    </div><div class="bc-label">${l}m</div>`;
+    container.appendChild(g);
+  });
+  setTimeout(()=>{container.querySelectorAll('.bc-bar').forEach(b=>{b.style.height=b.dataset.h+'px'})},200);
+}
+
+const responses=[
+  {t:'Amen',type:'Affirmation',pill:'pill-amen',topics:['"His grace never runs dry"','"God is faithful"','"Be still and know"']},
+  {t:'Alleluia',type:'Praise',pill:'pill-praise',topics:['"Worthy is the Lamb"','"He rose again"','"He is Lord"']},
+  {t:'Preach!',type:'Peak',pill:'pill-high',topics:['"Your season is turning"','"The enemy is defeated"','"Walk in victory"']},
+  {t:'Glory',type:'Worship',pill:'pill-praise',topics:['"Only God can do this"','"His presence fills the room"']},
+  {t:'Yes Lord',type:'Affirmation',pill:'pill-amen',topics:['"Surrender your burdens"','"He knows your name"']},
+];
+const scores=['8.4','8.9','9.1','9.5','9.8','10.0','8.2','8.7'];
+
+function addTableRow(){
+  const tb=document.getElementById('responseTable');if(!tb)return;
+  const r=responses[Math.floor(Math.random()*responses.length)];
+  const topic=r.topics[Math.floor(Math.random()*r.topics.length)];
+  const score=scores[Math.floor(Math.random()*scores.length)];
+  const now=new Date();
+  const time=now.getHours()+':'+(now.getMinutes()<10?'0':'')+now.getMinutes();
+  const tr=document.createElement('tr');
+  tr.innerHTML=`<td style="font-family:'Courier Prime',monospace">${time}</td><td style="font-weight:700">${r.t}</td><td><span class="pill ${r.pill}">${r.type}</span></td><td style="font-size:11px;color:var(--text3)">${topic}</td><td style="font-weight:700;color:var(--gold)">${score}</td>`;
+  tb.insertBefore(tr,tb.firstChild);
+  while(tb.children.length>6)tb.removeChild(tb.lastChild);
+}
+
+// Verse text fade
+const vEl=document.getElementById('heroVerse');
+if(vEl){vEl.style.transition='opacity .3s ease'}
+</script>
+</body>
+</html>
